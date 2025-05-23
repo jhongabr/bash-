@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+clear
+# strings que armazena os códigos de cores de exibição do echo
+Azul="\033[34m"
+ciano="\033[36m"
+branco="\033[37m"
+reset="\033[0m"
+
+
+# verificações
+if ! [[ "$UID" = "0" ]]
+then echo -e "$ciano precisa de root $reset"
+    exit 1
+fi
+
+# funções das opções
+
+optimizer(){
+     apt-get clean #clean downloeded package
+    apt-get autoremove #remove unnecessary package
+    apt-get autoclean #remove unnecessary package
+}
+
+perform_updates(){
+    sudo apt-get -y update #update package list before upgrade
+    apt-get -y upgrade #update all package
+    apt-get -y full-upgrade #upgrade all everythings
+    apt install apt #update apt itself
+}
+
+clean_ram(){
+    sudo sync && echo 3 | tee /proc/sys/vm/drop_caches #clean all package of the ram
+}
+
+#interface
+
+echo "
+1; otimiza o sitema.
+2; atualiza todo o sistema. 
+3; limpa o cache da memória ram.
+4; sair
+"
+
+#input data
+read -p "escolha uma opção " option
+
+# executing choosen options
+
+case "$option" in
+    1) optimizer ;;
+    2) perform_updates ;;
+    3) clean_ram ;;
+    4) exit 1 ;;
+    5) echo "escolha um número imbecil" 
+     exit 1 ;;
+esac
