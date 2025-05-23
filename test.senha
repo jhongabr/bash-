@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+#entrada de dados
+read -sp "digite uma senha" senha
+
+###################################### verificação da quantidade de caracteres ############################# testado e aprovado
+if [[ "${#senha}" -lt "8" ]]; then
+	{ echo $'\nprecisa de pelo menos 8 caracteres' ; exit ;}
+else
+	echo $'\nquantidade minima aceita' 
+fi
+
+##################################### verifica se tem caracteres especiais ################################## teste aprovado
+if ! [[ "$senha" =~ [A-Za-z] ]] || ! [[ "$senha" =~ [0-9] ]]; then
+	{ echo "precisa de letras e números"; exit ; }
+fi
+
+##################################### verifica se tem  caracteres especiais ####################################
+if ! [[ "$senha" =~ [@#$%¨*] ]]; then
+	{ echo $'\nprecisa de caracteres especiais como (!@#$%¨&*)'; exit ; }
+fi
+
+echo $'\nsenha aceita'
+
+
+
+
